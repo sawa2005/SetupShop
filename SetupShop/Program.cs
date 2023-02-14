@@ -5,6 +5,14 @@ using SetupShop.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.IsEssential= true;
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -20,6 +28,8 @@ builder.Services.AddDbContext<SetupShopContext>(options =>
 builder.Services.AddDefaultIdentity<SetupShopUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SetupShopContext>();
 
 var app = builder.Build();
+
+app.UseSession();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -41,5 +51,8 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
+
+var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<SetupContext>();
+SeedData.SeedDatabase(context);
 
 app.Run();

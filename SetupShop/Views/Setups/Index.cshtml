@@ -7,10 +7,10 @@
 @model IEnumerable<SetupShop.Models.Setup>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Setups";
 }
 
-<h1>Manage Setups</h1>
+<h1>Setups</h1>
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -61,7 +61,14 @@
                         @Html.DisplayFor(modelItem => item.Author)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.File)
+                        @if (item.File != null)
+                        {
+                            <p>byte</p>
+                        }
+                        else
+                        {
+                            <p>null</p>
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Car)
@@ -93,5 +100,22 @@
 }
 else
 {
-    <p>Please log in first!</p>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-4">
+                <img src="/media/@item.Image" class="img-fluid" alt="" />
+                <h4>@item.Name</h4>
+                <div>
+                    <p>@item.Car - @item.Season</p>
+                </div>
+                <p>
+                    @item.Price.ToString("C2")
+                </p>
+                <p>
+                    <a class="btn btn-primary" asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id">Add To Cart</a>
+                </p>
+            </div>
+        }
+    </div>
 }
