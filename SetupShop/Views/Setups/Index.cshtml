@@ -21,6 +21,9 @@
         <thead>
             <tr>
                 <th>
+                    @Html.DisplayNameFor(model => model.Image)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <th>
@@ -54,6 +57,9 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        <img src="/media/@Html.DisplayFor(modelItem => item.Image)" class="img-fluid" alt="" />
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>

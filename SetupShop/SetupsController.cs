@@ -13,10 +13,12 @@ namespace SetupShop
     public class SetupsController : Controller
     {
         private readonly SetupContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public SetupsController(SetupContext context)
+        public SetupsController(SetupContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Setups
@@ -56,14 +58,32 @@ namespace SetupShop
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Author,File,Car,Track,Season,Week,Series,VideoUrl")] Setup setup)
+        public async Task<IActionResult> Create(Setup setup)
         {
             if (ModelState.IsValid)
             {
+                if (setup.ImageUpload != null)
+                {
+                    string uploadsDir = Path.Combine(_webHostEnvironment.WebRootPath, "media");
+                    string imageName = Guid.NewGuid().ToString() + "_" + setup.ImageUpload.FileName;
+
+                    string filePath = Path.Combine(uploadsDir, imageName);
+
+                    FileStream fs = new FileStream(filePath, FileMode.Create);
+                    await setup.ImageUpload.CopyToAsync(fs);
+                    fs.Close();
+
+                    setup.Image = imageName;
+                }
+
                 _context.Add(setup);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                TempData["Success"] = "The product has been added!";
+
+                return RedirectToAction("Index");
             }
+
             return View(setup);
         }
 
@@ -88,7 +108,7 @@ namespace SetupShop
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Author,File,Car,Track,Season,Week,Series,VideoUrl")] Setup setup)
+        public async Task<IActionResult> Edit(int id, Setup setup)
         {
             if (id != setup.Id)
             {
@@ -97,24 +117,26 @@ namespace SetupShop
 
             if (ModelState.IsValid)
             {
-                try
+                if (setup.ImageUpload != null)
                 {
-                    _context.Update(setup);
-                    await _context.SaveChangesAsync();
+                    string uploadsDir = Path.Combine(_webHostEnvironment.WebRootPath, "media");
+                    string imageName = Guid.NewGuid().ToString() + "_" + setup.ImageUpload.FileName;
+
+                    string filePath = Path.Combine(uploadsDir, imageName);
+
+                    FileStream fs = new FileStream(filePath, FileMode.Create);
+                    await setup.ImageUpload.CopyToAsync(fs);
+                    fs.Close();
+
+                    setup.Image = imageName;
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SetupExists(setup.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+
+                _context.Update(setup);
+                await _context.SaveChangesAsync();
+
+                TempData["Success"] = "The product has been edited!";
             }
+
             return View(setup);
         }
 
@@ -128,12 +150,29 @@ namespace SetupShop
 
             var setup = await _context.Setup
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (setup == null)
             {
                 return NotFound();
             }
 
-            return View(setup);
+            if (!string.Equals(setup.Image, "noimage.png"))
+            {
+                string uploadsDir = Path.Combine(_webHostEnvironment.WebRootPath, "media");
+                string oldImagePath = Path.Combine(uploadsDir, setup.Image);
+
+                if (System.IO.File.Exists(oldImagePath))
+                {
+                    System.IO.File.Delete(oldImagePath);
+                }
+            }
+
+            _context.Setup.Remove(setup);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "The product has been deleted!";
+
+            return RedirectToAction("Index");
         }
 
         // POST: Setups/Delete/5

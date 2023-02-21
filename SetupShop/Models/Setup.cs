@@ -1,4 +1,5 @@
 ﻿using Microsoft.Build.Framework;
+using SetupShop.Data.Validation;
 using System.ComponentModel.DataAnnotations.Schema;
 using RequiredAttribute = System.ComponentModel.DataAnnotations.RequiredAttribute;
 
@@ -39,6 +40,10 @@ namespace SetupShop.Models
         [Column(TypeName = "decimal(8, 2)")]
         public decimal Price { get; set; }
 
-        public string Image { get; set; }
+        public string Image { get; set; } = "noimage.png";
+
+        [NotMapped]
+        [FileExtension]
+        public IFormFile ImageUpload { get; set; }
     }
 }
