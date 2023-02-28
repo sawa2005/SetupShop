@@ -15,8 +15,12 @@ namespace SetupShop.Models
 
         public string Author { get; set; }
 
-        [Required(ErrorMessage = "Please upload a file")]
         public byte[] File { get; set; }
+        public string FileName { get; set; }
+        public string FileType { get; set; }
+
+        [NotMapped]
+        public IFormFile FileUpload { get; set; }
 
         [Required(ErrorMessage = "Please enter a value")]
         public string Car { get; set; }

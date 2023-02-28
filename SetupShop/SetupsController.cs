@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -76,10 +77,24 @@ namespace SetupShop
                     setup.Image = imageName;
                 }
 
+                if (setup.FileUpload != null)
+                {             
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        var file = setup.FileUpload;
+
+                        await file.CopyToAsync(memoryStream);
+
+                        setup.FileName = file.FileName;
+                        setup.FileType = file.ContentType;
+                        setup.File = memoryStream.ToArray();
+                    }
+                }
+
                 _context.Add(setup);
                 await _context.SaveChangesAsync();
 
-                TempData["Success"] = "The product has been added!";
+                TempData["Success"] = "The setup has been added!";
 
                 return RedirectToAction("Index");
             }
@@ -192,6 +207,21 @@ namespace SetupShop
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Download(int id)
+        {
+            using (var db = _context)
+            {
+                var fileUpload = await db.Setup.FindAsync(id);
+
+                if (fileUpload != null)
+                {
+                    return File(fileUpload.File, fileUpload.FileType, fileUpload.FileName);
+                }
+            }
+
+            return NotFound("File doesn't exist.");
         }
 
         private bool SetupExists(int id)
