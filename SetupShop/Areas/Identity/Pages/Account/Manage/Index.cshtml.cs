@@ -4,6 +4,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.ConstrainedExecution;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -59,17 +60,24 @@ namespace SetupShop.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [StringLength(128, ErrorMessage = "The name must be at least 6 characters and at max 128 characters long.", MinimumLength = 6)]
+            [Display(Name = "Display name")]
+            public string DisplayName { get; set; }
         }
 
         private async Task LoadAsync(SetupShopUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var displayName = user.DisplayName;
 
             Username = userName;
 
             Input = new InputModel
             {
+                DisplayName = displayName,
                 PhoneNumber = phoneNumber
             };
         }
@@ -98,6 +106,17 @@ namespace SetupShop.Areas.Identity.Pages.Account.Manage
             {
                 await LoadAsync(user);
                 return Page();
+            }
+
+            if (Input.DisplayName != user.DisplayName)
+            {
+                user.DisplayName = Input.DisplayName;
+                var setNameResult = await _userManager.UpdateAsync(user);
+                if (!setNameResult.Succeeded)
+                {
+                    StatusMessage = "Unexpected error when trying to set display name.";
+                    return RedirectToPage();
+                }
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);

@@ -1,5 +1,4 @@
 @using SetupShop.Areas.Identity.Data;
-
 @inject SignInManager<SetupShopUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
