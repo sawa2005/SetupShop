@@ -146,6 +146,20 @@ namespace SetupShop
                     setup.Image = imageName;
                 }
 
+                if (setup.FileUpload != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        var file = setup.FileUpload;
+
+                        await file.CopyToAsync(memoryStream);
+
+                        setup.FileName = file.FileName;
+                        setup.FileType = file.ContentType;
+                        setup.File = memoryStream.ToArray();
+                    }
+                }
+
                 _context.Update(setup);
                 await _context.SaveChangesAsync();
 

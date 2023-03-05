@@ -1,4 +1,9 @@
-﻿@model SetupShop.Models.Setup
+﻿@using Microsoft.AspNetCore.Identity;
+@using SetupShop.Areas.Identity.Data;
+
+@model SetupShop.Models.Setup
+
+@inject UserManager<SetupShopUser> UserManager
 
 @{
     ViewData["Title"] = "Create";
@@ -13,14 +18,14 @@
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Author" class="control-label"></label>
+                <input asp-for="Author" class="form-control" value="@((await UserManager.GetUserAsync(User)).DisplayName)" readonly />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
-                <input asp-for="Author" class="form-control" />
-                <span asp-validation-for="Author" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="FileUpload" class="control-label">File</label>
