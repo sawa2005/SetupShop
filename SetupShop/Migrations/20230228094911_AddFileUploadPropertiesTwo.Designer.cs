@@ -9,7 +9,7 @@ using SetupShop.Data;
 
 namespace SetupShop.Migrations
 {
-    [DbContext(typeof(SetupContext))]
+    [DbContext(typeof(SetupShopContext))]
     [Migration("20230228094911_AddFileUploadPropertiesTwo")]
     partial class AddFileUploadPropertiesTwo
     {

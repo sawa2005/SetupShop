@@ -9,7 +9,7 @@ using SetupShop.Data;
 
 namespace SetupShop.Migrations
 {
-    [DbContext(typeof(SetupContext))]
+    [DbContext(typeof(SetupShopContext))]
     [Migration("20230131092547_SetupAddedProps")]
     partial class SetupAddedProps
     {

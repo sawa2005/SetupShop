@@ -1,4 +1,6 @@
-﻿using Microsoft.Build.Framework;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Framework;
+using SetupShop.Areas.Identity.Data;
 using SetupShop.Data.Validation;
 using System.ComponentModel.DataAnnotations.Schema;
 using RequiredAttribute = System.ComponentModel.DataAnnotations.RequiredAttribute;
@@ -49,5 +51,7 @@ namespace SetupShop.Models
         [NotMapped]
         [FileExtension]
         public IFormFile ImageUpload { get; set; }
+
+        public ICollection<UserSetup> UserSetups { get; set; }
     }
 }

@@ -1,18 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SetupShop.Areas.Identity.Data;
 using SetupShop.Data;
 using SetupShop.Models;
 using SetupShop.Models.ViewModels;
+using System.Diagnostics;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 
 namespace SetupShop.Controllers
 {
     public class CartController : Controller
     {
-        private readonly SetupContext _context;
+        private readonly SetupShopContext _context;
+        private readonly UserManager<SetupShopUser> _userManager;
 
-        public CartController(SetupContext context)
+        public CartController(SetupShopContext context, UserManager<SetupShopUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -31,7 +38,7 @@ namespace SetupShop.Controllers
 
         public async Task<IActionResult> Add(int id)
         {
-            Setup product = await _context.Setup.FindAsync(id);
+            Setup product = await _context.Setups.FindAsync(id);
 
             if (product == null)
             {
@@ -105,6 +112,40 @@ namespace SetupShop.Controllers
             }
 
             TempData["Success"] = "The product has been added!";
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Checkout()
+        {
+            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart");
+            
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            CartViewModel cartVM = new()
+            {
+                CartItems = cart,
+                GrandTotal = cart.Sum(x => x.Quantity * x.Price)
+            };
+
+            var user = _context.Users.Single(u => u.Id == userId);
+
+            foreach (var item in cartVM.CartItems)
+            {
+                var setup = _context.Setups
+                    .Include(s => s.UserSetups)
+                    .Single(s => s.Id == item.ProductId);
+
+                setup.UserSetups.Add(new UserSetup
+                {
+                    User = user,
+                    Setup = setup
+                });
+
+                _context.SaveChanges();
+            }
+
+            HttpContext.Session.Remove("Cart");
 
             return RedirectToAction("Index");
         }

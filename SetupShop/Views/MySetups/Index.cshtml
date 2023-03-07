@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SetupShop.Areas.Identity.Data
+
+@inject SignInManager<SetupShopUser> SignInManager
+@inject UserManager<SetupShopUser> UserManager
+
+@model IEnumerable<SetupShop.Models.Setup>
+
+@{
+    ViewData["Title"] = "My Setups";
+}
+
+<h1>My Setups</h1>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <ul>
+        @foreach (var setup in Model)
+        {
+            <li>@setup.Name</li>
+        }
+    </ul>
+}
+
+else {
+    <p>You are not logged in!</p>
+}

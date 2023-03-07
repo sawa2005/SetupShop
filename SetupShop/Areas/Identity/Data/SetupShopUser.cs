@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
+using SetupShop.Models;
 
 namespace SetupShop.Areas.Identity.Data;
 
@@ -9,5 +10,7 @@ namespace SetupShop.Areas.Identity.Data;
 public class SetupShopUser : IdentityUser
 {
     public string DisplayName { get; set; }
+
+    public ICollection<UserSetup> UserSetups { get; set; }
 }
 

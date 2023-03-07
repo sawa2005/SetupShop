@@ -17,10 +17,6 @@ builder.Services.AddSession(options =>
 builder.Services.AddControllersWithViews();
 
 // Database connections
-builder.Services.AddDbContext<SetupContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultDbString"))
-);
-
 builder.Services.AddDbContext<SetupShopContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultDbString"))
 );
@@ -52,7 +48,7 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 
-var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<SetupContext>();
+var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<SetupShopContext>();
 SeedData.SeedDatabase(context);
 
 app.Run();

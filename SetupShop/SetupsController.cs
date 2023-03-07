@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SetupShop.Areas.Identity.Data;
 using SetupShop.Data;
 using SetupShop.Models;
 
@@ -13,32 +15,34 @@ namespace SetupShop
 {
     public class SetupsController : Controller
     {
-        private readonly SetupContext _context;
+        private readonly SetupShopContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly UserManager<SetupShopUser> _userManager;
 
-        public SetupsController(SetupContext context, IWebHostEnvironment webHostEnvironment)
+        public SetupsController(SetupShopContext context, IWebHostEnvironment webHostEnvironment, UserManager<SetupShopUser> userManager)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            _userManager = userManager;
         }
 
         // GET: Setups
         public async Task<IActionResult> Index()
         {
-              return _context.Setup != null ? 
-                          View(await _context.Setup.ToListAsync()) :
+              return _context.Setups != null ? 
+                          View(await _context.Setups.ToListAsync()) :
                           Problem("Entity set 'SetupContext.Setup'  is null.");
         }
 
         // GET: Setups/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Setup == null)
+            if (id == null || _context.Setups == null)
             {
                 return NotFound();
             }
 
-            var setup = await _context.Setup
+            var setup = await _context.Setups
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (setup == null)
             {
@@ -105,12 +109,12 @@ namespace SetupShop
         // GET: Setups/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Setup == null)
+            if (id == null || _context.Setups == null)
             {
                 return NotFound();
             }
 
-            var setup = await _context.Setup.FindAsync(id);
+            var setup = await _context.Setups.FindAsync(id);
             if (setup == null)
             {
                 return NotFound();
@@ -172,12 +176,12 @@ namespace SetupShop
         // GET: Setups/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Setup == null)
+            if (id == null || _context.Setups == null)
             {
                 return NotFound();
             }
 
-            var setup = await _context.Setup
+            var setup = await _context.Setups
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (setup == null)
@@ -196,7 +200,7 @@ namespace SetupShop
                 }
             }
 
-            _context.Setup.Remove(setup);
+            _context.Setups.Remove(setup);
             await _context.SaveChangesAsync();
 
             TempData["Success"] = "The product has been deleted!";
@@ -209,14 +213,14 @@ namespace SetupShop
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Setup == null)
+            if (_context.Setups == null)
             {
                 return Problem("Entity set 'SetupContext.Setup'  is null.");
             }
-            var setup = await _context.Setup.FindAsync(id);
+            var setup = await _context.Setups.FindAsync(id);
             if (setup != null)
             {
-                _context.Setup.Remove(setup);
+                _context.Setups.Remove(setup);
             }
             
             await _context.SaveChangesAsync();
@@ -227,7 +231,7 @@ namespace SetupShop
         {
             using (var db = _context)
             {
-                var fileUpload = await db.Setup.FindAsync(id);
+                var fileUpload = await db.Setups.FindAsync(id);
 
                 if (fileUpload != null)
                 {
@@ -240,7 +244,7 @@ namespace SetupShop
 
         private bool SetupExists(int id)
         {
-          return (_context.Setup?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Setups?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

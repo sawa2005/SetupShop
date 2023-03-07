@@ -6,13 +6,13 @@ namespace SetupShop.Data
 {
     public class SeedData
     {
-        public static void SeedDatabase(SetupContext context)
+        public static void SeedDatabase(SetupShopContext context)
         {
             context.Database.Migrate();
 
-            if (!context.Setup.Any())
+            if (!context.Setups.Any())
             {
-                context.Setup.AddRange(
+                context.Setups.AddRange(
                     new Setup
                     {
                         Name = "Base Setup",
