@@ -16,12 +16,22 @@ builder.Services.AddSession(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+#region Authorization
+
+AddAuthorizationPolicies(builder.Services);
+
+#endregion
+
 // Database connections
 builder.Services.AddDbContext<SetupShopContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultDbString"))
 );
 
-builder.Services.AddDefaultIdentity<SetupShopUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SetupShopContext>();
+builder.Services.AddDefaultIdentity<SetupShopUser>(options => {
+    options.SignIn.RequireConfirmedAccount = true;
+    })
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<SetupShopContext>();
 
 var app = builder.Build();
 
@@ -39,7 +49,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -52,3 +62,11 @@ var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<Setu
 SeedData.SeedDatabase(context);
 
 app.Run();
+
+void AddAuthorizationPolicies(IServiceCollection services)
+{
+    services.AddAuthorization(options =>
+    {
+        options.AddPolicy("RequireAuthor", policy => policy.RequireRole("Author"));
+    });
+}

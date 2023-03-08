@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,7 @@ using SetupShop.Models;
 
 namespace SetupShop
 {
+    [Authorize(Policy = "RequireAuthor")]
     public class SetupsController : Controller
     {
         private readonly SetupShopContext _context;
@@ -27,9 +29,17 @@ namespace SetupShop
         }
 
         // GET: Setups
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
               return _context.Setups != null ? 
+                          View(await _context.Setups.ToListAsync()) :
+                          Problem("Entity set 'SetupContext.Setup'  is null.");
+        }
+
+        public async Task<IActionResult> Author()
+        {
+            return _context.Setups != null ?
                           View(await _context.Setups.ToListAsync()) :
                           Problem("Entity set 'SetupContext.Setup'  is null.");
         }
