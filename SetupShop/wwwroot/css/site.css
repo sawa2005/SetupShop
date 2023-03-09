@@ -1,3 +1,5 @@
+/* Default styles */
+
 html {
   font-size: 14px;
 }
@@ -19,4 +21,276 @@ html {
 
 body {
   margin-bottom: 60px;
+  color: white;
+}
+
+/* Custom Styles */
+
+body {
+    background-color: #131313;
+}
+
+header {
+    background-color: #131313;
+}
+
+header > * {
+    background-color: #131313;
+}
+
+nav a {
+    font-family: "elza-narrow", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    background-color: #4E4E4E;
+    font-family: "elza-narrow", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    border-radius: 10px;
+    padding: 8px 16px !important;
+    transition: 0.2s ease;
+}
+
+.btn-sm {
+    padding: 4px 8px !important;
+}
+
+.btn:hover {
+    filter: brightness(125%);
+}
+
+.green {
+    background-color: #379861;
+}
+
+.red {
+    background-color: #983737;
+}
+
+.navbar-nav {
+    gap: 20px;
+}
+
+.container-fluid {
+    gap: 30px;
+}
+
+.navbar {
+    border-bottom: 2px solid #232323;
+    padding: 1rem;
+}
+
+h1 {
+    font-family: "roc-grotesk-wide", sans-serif;
+    font-style: normal;
+}
+
+h2 {
+    font-family: "roc-grotesk-wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    margin-bottom: 20px;
+}
+
+h4 {
+    font-family: elza-narrow, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+p, footer, label, input, .alert {
+    font-family: "effra", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0.08rem;
+}
+
+.display-4 {
+    font-weight: 400;
+}
+
+.text-center {
+    max-width: 942px;
+    margin: auto;
+}
+
+.welcome-text {
+    max-width: 942px;
+    margin: auto;
+}
+
+.footer {
+    border-top: 2px solid #232323;
+}
+
+.container { 
+    max-width: 950px
+}
+
+.setup {
+    border: 2px solid #232323;
+    border-radius: 15px;
+    padding: 0;
+}
+
+.setup img {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.setup-wrapper {
+    padding: 20px;
+}
+
+.setup-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.setup-info p {
+    margin: 0;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.col-6 {
+    width: 47%;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.flex p {
+    margin: 0;
+}
+
+.setup-info svg {
+    min-width: 15px;
+}
+
+.setup-info-top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.setup-info-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.price {
+    font-family: elza-narrow, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.25rem;
+}
+
+.cart {
+    margin-right: 20px;
+    margin-bottom: 0 !important;
+}
+
+.cart p {
+    font-family: elza-narrow, sans-serif;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.table {
+    color: white;
+    font-family: elza-narrow, sans-serif;
+}
+
+.table-wrapper {
+    padding: 30px 45px;
+    border: 2px solid #232323;
+    border-radius: 15px;
+}
+
+.cart-item-controls {
+    text-align: right;
+}
+
+tr {
+    border-color: #232323;
+    border-bottom-width: 2px;
+}
+
+.cart-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+iframe {
+    width: 100%;
+    height: 483px;
+}
+
+h3 {
+    font-family: "roc-grotesk-wide", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 8px;
+}
+
+.profile {
+    justify-content: normal !important;
+}
+
+.form-control {
+    background-color: #232323;
+    color: white;
+}
+
+.form-control:disabled {
+    background-color: #757575;
+}
+
+.form-control:focus {
+    background-color: #101010;
+    color: white;
+}
+
+.nav-pills .nav-link {
+    font-family: elza-narrow, sans-serif;
+    font-weight: 400;
+    color: white;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: #232323;
+}
+
+.alert {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
 }

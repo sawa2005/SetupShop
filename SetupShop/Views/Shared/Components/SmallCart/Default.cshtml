@@ -2,12 +2,21 @@
 
 @if (Model != null)
 {
-    <p>Items in cart: <span class="badge badge-primary">@Model.NumberOfItems</span></p>
+    <div class="flex cart">
+        <a asp-controller="Cart" asp-action="Index">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15.986" height="14.21" viewBox="0 0 15.986 14.21">
+                <path id="Icon_awesome-shopping-cart" data-name="Icon awesome-shopping-cart" d="M14.657,8.363,15.969,2.59a.666.666,0,0,0-.65-.814H4.419L4.164.533A.666.666,0,0,0,3.512,0H.666A.666.666,0,0,0,0,.666V1.11a.666.666,0,0,0,.666.666h1.94l1.95,9.532a1.554,1.554,0,1,0,1.861.238h5.819A1.554,1.554,0,1,0,14,11.257l.153-.674a.666.666,0,0,0-.65-.814H6.054l-.182-.888h8.136A.666.666,0,0,0,14.657,8.363Z" fill="#fff" />
+            </svg>
+        </a>
+        <p>@Model.NumberOfItems</p>
+    </div>
+
+    /* <p>Items in cart: <span class="badge badge-primary">@Model.NumberOfItems</span></p>
     <p>Total: <b>@Model.TotalAmount.ToString("C2")</b></p>
     <a class="btn btn-primary" asp-controller="Cart" asp-action="Index">View Cart</a>
-    <a class="btn btn-danger" asp-controller="Cart" asp-action="Clear">Clear Cart</a>
+    <a class="btn btn-danger" asp-controller="Cart" asp-action="Clear">Clear Cart</a> */
 }
 else 
 {
-    <p class="lead m-0">Your cart is empty.</p>
+    
 }

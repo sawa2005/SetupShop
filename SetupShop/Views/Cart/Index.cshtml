@@ -4,42 +4,54 @@
     ViewData["Title"] = "Cart Overview";
 }
 
-<h1>Cart Overview</h1>
+<h2>Cart Overview</h2>
 
 @if (Model.CartItems.Count > 0)
 {
-    <table class="table">
+    <div class="table-wrapper">
+        <table class="table">
         <tr>
             <th>Product</th>
             <th>Quantity</th>
-            <th></th>
             <th>Price</th>
             <th>Total</th>
+            <th></th>
         </tr>
-    @foreach (var item in Model.CartItems)
-    {
-        <tr>
-            <td>@item.ProductName</td>
-            <td>@item.Quantity</td>
-            <td>
-                <a class="btn btn-primary btn-sm" asp-action="Add" asp-route-id="@item.ProductId">+</a>
-                <a class="btn btn-info btn-sm" asp-action="Decrease" asp-route-id="@item.ProductId">-</a>
-                <a class="btn btn-danger btn-sm" asp-action="Remove" asp-route-id="@item.ProductId">Remove</a>
-            </td>
-            <td>@item.Price.ToString("C2")</td>
-            <td>@Model.CartItems.Where(x => x.ProductId == item.ProductId).Sum(x => x.Quantity * x.Price).ToString("C2")</td>
-        </tr>
-    }
-        <tr>
-            <td class="text-right" colspan="4">Grand Total: @Model.GrandTotal.ToString("C2")</td>
-        </tr>
-        <tr>
-            <td class="text-right" colspan="4">
-                <a class="btn btn-danger" asp-action="Clear">Clear Cart</a>
-                <a class="btn btn-primary" asp-action="Checkout">Checkout</a>
-            </td>
-        </tr>
-    </table>
+        @foreach (var item in Model.CartItems)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price.ToString("C2")</td>
+                <td>@Model.CartItems.Where(x => x.ProductId == item.ProductId).Sum(x => x.Quantity * x.Price).ToString("C2")</td>
+                <td class="cart-item-controls">
+                    <a class="btn btn-sm green" asp-action="Add" asp-route-id="@item.ProductId">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13.299" height="13.299" viewBox="0 0 13.299 13.299">
+                          <path d="M12.349,7.474H8.074V3.2a.95.95,0,0,0-.95-.95h-.95a.95.95,0,0,0-.95.95V7.474H.95a.95.95,0,0,0-.95.95v.95a.95.95,0,0,0,.95.95H5.224V14.6a.95.95,0,0,0,.95.95h.95a.95.95,0,0,0,.95-.95V10.324h4.275a.95.95,0,0,0,.95-.95v-.95A.95.95,0,0,0,12.349,7.474Z" transform="translate(0 -2.25)" fill="#fff"/>
+                        </svg>
+                    </a>
+                    <a class="btn btn-sm" asp-action="Decrease" asp-route-id="@item.ProductId">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13.294" height="2.849" viewBox="0 0 13.294 2.849">
+                            <path d="M12.344,14.625H.95a.95.95,0,0,0-.95.95v.95a.95.95,0,0,0,.95.95H12.344a.95.95,0,0,0,.95-.95v-.95A.95.95,0,0,0,12.344,14.625Z" transform="translate(0 -14.625)" fill="#fff" />
+                        </svg>
+                    </a>
+                    <a class="btn btn-sm red" asp-action="Remove" asp-route-id="@item.ProductId">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="11.457" height="13.094" viewBox="0 0 11.457 13.094">
+                            <path d="M11.048.818H7.979L7.738.34A.614.614,0,0,0,7.189,0H4.266a.607.607,0,0,0-.547.34l-.24.478H.409A.409.409,0,0,0,0,1.228v.818a.409.409,0,0,0,.409.409H11.048a.409.409,0,0,0,.409-.409V1.228A.409.409,0,0,0,11.048.818ZM1.361,11.943a1.228,1.228,0,0,0,1.225,1.151H8.871A1.227,1.227,0,0,0,10.1,11.943l.542-8.67H.818Z" fill="#fff" />
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+        }
+            <tr>
+                <td class="text-right" colspan="4">Grand Total: @Model.GrandTotal.ToString("C2")</td>
+            </tr>
+        </table>
+        <div class="cart-controls">
+            <a class="btn red text-white" asp-action="Clear">Clear Cart</a>
+            <a class="btn green text-white" asp-action="Checkout">Checkout</a>
+        </div>
+    </div>
 } 
 else
 {

@@ -91,7 +91,7 @@ namespace SetupShop.Controllers
                 HttpContext.Session.SetJson("Cart", cart);
             }
 
-            TempData["Success"] = "The product has been added!";
+            TempData["Success"] = "The product quantity has been reduced!";
 
             return RedirectToAction("Index");
         }
@@ -111,7 +111,7 @@ namespace SetupShop.Controllers
                 HttpContext.Session.SetJson("Cart", cart);
             }
 
-            TempData["Success"] = "The product has been added!";
+            TempData["Success"] = "The product has been removed!";
 
             return RedirectToAction("Index");
         }

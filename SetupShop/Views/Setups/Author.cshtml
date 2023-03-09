@@ -10,9 +10,7 @@
     ViewData["Title"] = "Setups";
 }
 
-<h1>Setups</h1>
-
-<h2>Manage</h2>
+<h2>Manage Setups</h2>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -66,14 +64,7 @@
                     @Html.DisplayFor(modelItem => item.Author)
                 </td>
                 <td>
-                    @if (item.File != null)
-                    {
-                        <p>byte</p>
-                    }
-                    else
-                    {
-                        <p>null</p>
-                    }
+                    @Html.DisplayFor(modelItem => item.FileName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Car)
