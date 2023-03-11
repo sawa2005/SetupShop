@@ -147,6 +147,8 @@ namespace SetupShop.Controllers
 
             HttpContext.Session.Remove("Cart");
 
+            TempData["Success"] = "Thank you for your purchase!";
+
             return RedirectToAction("Index");
         }
 

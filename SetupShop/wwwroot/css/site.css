@@ -49,6 +49,7 @@ nav a:hover {
 }
 
 .btn {
+    height: 40px;
     background-color: #4E4E4E;
     font-family: "elza-narrow", sans-serif;
     font-weight: 400;
@@ -60,6 +61,7 @@ nav a:hover {
 
 .btn-sm {
     padding: 4px 8px !important;
+    height: 30px !important;
 }
 
 .btn:hover {
@@ -151,6 +153,7 @@ p, footer, label, input, .alert {
 
 .setup-info {
     display: flex;
+    gap: 15px;
     justify-content: space-between;
 }
 
@@ -191,6 +194,7 @@ p, footer, label, input, .alert {
 }
 
 .setup-info-right {
+    min-width: max-content;
     text-align: right;
     display: flex;
     flex-direction: column;
@@ -293,4 +297,20 @@ h3 {
     margin-left: auto;
     margin-right: auto;
     width: 300px;
+}
+
+@media screen and (max-width:650px) {
+    .col-6 {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width:575px) {
+    .navbar-nav {
+        margin-bottom: 30px;
+    }
+
+    .setup-info-top {
+        flex-direction: column;
+    }
 }

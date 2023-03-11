@@ -110,7 +110,7 @@ namespace SetupShop
 
                 TempData["Success"] = "The setup has been added!";
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Author");
             }
 
             return View(setup);
@@ -215,7 +215,7 @@ namespace SetupShop
 
             TempData["Success"] = "The product has been deleted!";
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Author");
         }
 
         // POST: Setups/Delete/5
