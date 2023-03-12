@@ -46,10 +46,13 @@
             <iframe 
                 src="@Html.DisplayFor(model => model.VideoUrl)"
                 title="YouTube video player" 
-                frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 allowfullscreen>
             </iframe>
         </div>
     </div>
+</div>
+
+<div>
+    <a class="btn text-white mt-4" asp-controller="MySetups" asp-action="Index">Back to List</a>
 </div>

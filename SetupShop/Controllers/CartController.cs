@@ -67,7 +67,7 @@ namespace SetupShop.Controllers
             }
         }
 
-        public async Task<IActionResult> Decrease(int id)
+        public IActionResult Decrease(int id)
         {
             List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart");
 
@@ -96,7 +96,7 @@ namespace SetupShop.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Remove(int id)
+        public IActionResult Remove(int id)
         {
             List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart");
 
@@ -116,7 +116,7 @@ namespace SetupShop.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Checkout()
+        public IActionResult Checkout()
         {
             List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart");
             

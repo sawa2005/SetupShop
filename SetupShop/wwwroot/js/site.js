@@ -23,3 +23,9 @@ function readURL(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+/* const elements = document.querySelectorAll('*');
+
+elements.forEach(element => {
+    element.removeAttribute(element.getAttributeNames().find(attr => attr.startsWith('b-')));
+});

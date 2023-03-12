@@ -12,7 +12,7 @@ public class SetupShopContext : IdentityDbContext<SetupShopUser>
 {
     public SetupShopContext(DbContextOptions<SetupShopContext> options) : base(options) {}
 
-    public DbSet<SetupShopUser> Users { get; set; }
+    public new DbSet<SetupShopUser> Users { get; set; }
     public DbSet<Setup> Setups { get; set; }
     public DbSet<UserSetup> UserSetups { get; set; }
 

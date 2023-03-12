@@ -21,7 +21,7 @@ namespace SetupShop.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 

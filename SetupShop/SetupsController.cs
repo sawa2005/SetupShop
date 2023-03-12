@@ -82,6 +82,8 @@ namespace SetupShop
                     string uploadsDir = Path.Combine(_webHostEnvironment.WebRootPath, "media");
                     string imageName = Guid.NewGuid().ToString() + "_" + setup.ImageUpload.FileName;
 
+                    imageName = imageName.Replace(" ", "_");
+
                     string filePath = Path.Combine(uploadsDir, imageName);
 
                     FileStream fs = new FileStream(filePath, FileMode.Create);
@@ -150,6 +152,8 @@ namespace SetupShop
                 {
                     string uploadsDir = Path.Combine(_webHostEnvironment.WebRootPath, "media");
                     string imageName = Guid.NewGuid().ToString() + "_" + setup.ImageUpload.FileName;
+
+                    imageName = imageName.Replace(" ", "_");
 
                     string filePath = Path.Combine(uploadsDir, imageName);
 
