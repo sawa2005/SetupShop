@@ -12,7 +12,7 @@ using SetupShop.Areas.Identity.Data;
 using SetupShop.Data;
 using SetupShop.Models;
 
-namespace SetupShop
+namespace SetupShop.Controllers
 {
     [Authorize(Policy = "RequireAuthor")]
     public class SetupsController : Controller
@@ -95,7 +95,7 @@ namespace SetupShop
                 }
 
                 if (setup.FileUpload != null)
-                {             
+                {
                     using (var memoryStream = new MemoryStream())
                     {
                         var file = setup.FileUpload;
@@ -237,7 +237,7 @@ namespace SetupShop
             {
                 _context.Setups.Remove(setup);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -260,7 +260,7 @@ namespace SetupShop
 
         private bool SetupExists(int id)
         {
-          return (_context.Setups?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Setups?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
