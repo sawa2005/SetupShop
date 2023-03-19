@@ -16,11 +16,7 @@ builder.Services.AddSession(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-#region Authorization
-
 AddAuthorizationPolicies(builder.Services);
-
-#endregion
 
 // Database connections
 builder.Services.AddDbContext<SetupShopContext>(options =>

@@ -32,9 +32,9 @@ namespace SetupShop
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-              return _context.Setups != null ? 
-                          View(await _context.Setups.ToListAsync()) :
-                          Problem("Entity set 'SetupContext.Setup'  is null.");
+            return _context.Setups != null ?
+                        View(await _context.Setups.ToListAsync()) :
+                        Problem("Entity set 'SetupContext.Setup'  is null.");
         }
 
         public async Task<IActionResult> Author()
@@ -45,6 +45,7 @@ namespace SetupShop
         }
 
         // GET: Setups/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Setups == null)
@@ -241,6 +242,7 @@ namespace SetupShop
             return RedirectToAction(nameof(Index));
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Download(int id)
         {
             using (var db = _context)
