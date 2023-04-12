@@ -1,4 +1,4 @@
-# Setup Shop
+# Setup shop with ASP.NET MVC
 This repository contains a database-driven website based on ASP.NET MVC Core with Entity Framework that I created. 
 The website has a CRUD interface and contains login functionality and presents data from a SQLite database to users.
 
